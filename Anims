@@ -38,14 +38,14 @@ local animations = {
     {id = "92955334444822", name = "itoshi rin"},
 }
 
+-- Create GUI
 local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = player:WaitForChild("PlayerGui")
 
--- Scrolling frame on top left
 local scrollingFrame = Instance.new("ScrollingFrame")
 scrollingFrame.Parent = screenGui
 scrollingFrame.Size = UDim2.new(0, 220, 0, 400)
-scrollingFrame.Position = UDim2.new(0, 10, 1, -410)
+scrollingFrame.Position = UDim2.new(0, 10, 1, -410) -- bottom-left
 scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, (#animations + 1) * 30)
 scrollingFrame.ScrollBarThickness = 8
 scrollingFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
@@ -55,18 +55,20 @@ local listLayout = Instance.new("UIListLayout")
 listLayout.Parent = scrollingFrame
 listLayout.Padding = UDim.new(0, 5)
 
--- Track for currently playing animation
-local currentTrack
-
-local function stopCurrentAnimation()
-    if currentTrack then
-        currentTrack:Stop()
-        currentTrack = nil
+-- Stop ALL animations
+local function stopAllAnimations()
+    local char = player.Character or player.CharacterAdded:Wait()
+    local humanoid = char:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        for _, track in pairs(humanoid:GetPlayingAnimationTracks()) do
+            track:Stop()
+        end
     end
 end
 
+-- Play selected animation (stop others first)
 local function playAnimation(animId)
-    stopCurrentAnimation() -- stop any running animation first
+    stopAllAnimations()
     local char = player.Character or player.CharacterAdded:Wait()
     local humanoid = char:FindFirstChildOfClass("Humanoid")
     if humanoid then
@@ -75,20 +77,19 @@ local function playAnimation(animId)
         local track = humanoid:LoadAnimation(anim)
         track.Looped = true
         track:Play()
-        currentTrack = track
     end
 end
 
--- Stop animation button
+-- Stop button
 local stopButton = Instance.new("TextButton")
 stopButton.Size = UDim2.new(1, -10, 0, 25)
 stopButton.Text = "🛑 Stop Animation"
 stopButton.BackgroundColor3 = Color3.fromRGB(150, 50, 50)
 stopButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 stopButton.Parent = scrollingFrame
-stopButton.MouseButton1Click:Connect(stopCurrentAnimation)
+stopButton.MouseButton1Click:Connect(stopAllAnimations)
 
--- Buttons for animations
+-- Create buttons for all animations
 for _, animData in ipairs(animations) do
     local button = Instance.new("TextButton")
     button.Size = UDim2.new(1, -10, 0, 25)
@@ -102,7 +103,7 @@ for _, animData in ipairs(animations) do
     end)
 end
 
--- Toggle visibility with M
+-- Toggle menu with M key
 UserInputService.InputBegan:Connect(function(input, gameProcessed)
     if not gameProcessed and input.KeyCode == Enum.KeyCode.M then
         scrollingFrame.Visible = not scrollingFrame.Visible
