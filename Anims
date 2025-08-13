@@ -36,6 +36,13 @@ local animations = {
     {id = "134331016837285", name = "oof"},
     {id = "70432904702322", name = "skinwalker"},
     {id = "92955334444822", name = "itoshi rin"},
+    {id = "107336618078320", name = "mahoraga summon"},
+    {id = "117285946325983", name = "gojo red"},
+    {id = "124632821831655", name = "gojo laugh"},
+    {id = "93612961664824", name = "gojo hollow purple"},
+    {id = "96760493070315", name = "gojo dead"},
+    {id = "98352002677627", name = "sukuna idle"},
+    {id = "116718638791834", name = "no"},
 }
 
 -- Create GUI
