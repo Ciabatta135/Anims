@@ -43,6 +43,14 @@ local animations = {
     {id = "96760493070315", name = "gojo dead"},
     {id = "98352002677627", name = "sukuna idle"},
     {id = "116718638791834", name = "no"},
+     {id = "104238959556624", name = "pocket hand1"},
+    {id = "110460553651561", name = "idk"},
+    {id = "113203077347750", name = "sans idle"},
+    {id = "81253639230607", name = "sans v1"},
+    {id = "76680605097305", name = "another sans idle"},
+    {id = "123627677663418", name = "sans v2"},
+    {id = "101544382833259", name = "float around"},
+    {id = "125230377961366", name = "beerus"},
 }
 
 -- Create GUI
